@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SEO Audit — www.rodgau-poolshop.de</title>
+<title>SEO Audit &mdash; www.rodgau-poolshop.de</title>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
     *{box-sizing:border-box;margin:0;padding:0}
@@ -27,7 +27,7 @@
     .section{background:white;border:1px solid #E5E3DE;border-radius:10px;padding:18px 20px;margin-bottom:10px}
     .section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:14px}
     .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-    .bar-label{font-size:13px;width:160px;flex-shrink:0;color:#444}
+    .bar-label{font-size:13px;width:180px;flex-shrink:0;color:#444}
     .bar-track{flex:1;height:6px;background:#F0EEE9;border-radius:3px;overflow:hidden}
     .bar-fill{height:100%;border-radius:3px}
     .bar-value{font-size:12px;font-family:'DM Mono',monospace;font-weight:500;width:36px;text-align:right}
@@ -43,9 +43,10 @@
     .info-value{font-weight:500;font-family:'DM Mono',monospace;font-size:12px}
     table{width:100%;border-collapse:collapse;font-size:13px}
     th{text-align:left;padding:8px 10px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#888;border-bottom:2px solid #F0EEE9}
-    td{padding:8px 10px;border-bottom:1px solid #F5F3EF;color:#333;font-size:13px}
+    td{padding:8px 10px;border-bottom:1px solid #F5F3EF;color:#333;font-size:13px;vertical-align:top}
     tr:last-child td{border-bottom:none}
-    .url{font-family:'DM Mono',monospace;font-size:11px;color:#555}
+    a.url{font-family:'DM Mono',monospace;font-size:11px;color:#1565C0;text-decoration:none;word-break:break-all}
+    a.url:hover{text-decoration:underline}
     .chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
     .chip-crit{background:#FDECEA;color:#C62828}
     .chip-warn{background:#FFF8E1;color:#E8A400}
@@ -64,7 +65,7 @@
   <button class="tab" onclick="showPage(4,this)">Empfehlungen</button>
 </div>
 
-<!-- SEITE 1: Uebersicht -->
+<!-- SEITE 1 -->
 <div class="page active" id="p0">
   <div class="header">
     <div>
@@ -102,7 +103,7 @@
     
     <div class="scorecard">
       <div class="sc-dot" style="background:#E8A400"></div>
-      <div class="sc-label">Title fehlt</div>
+      <div class="sc-label">Meta-Title fehlt</div>
       <div class="sc-value" style="color:#E8A400">278</div>
       <div class="sc-sub">von 500 Seiten</div>
     </div>
@@ -116,7 +117,7 @@
     
     <div class="scorecard">
       <div class="sc-dot" style="background:#E8A400"></div>
-      <div class="sc-label">Meta fehlt</div>
+      <div class="sc-label">Meta-Description fehlt</div>
       <div class="sc-value" style="color:#E8A400">8</div>
       <div class="sc-sub">von 500 Seiten</div>
     </div>
@@ -126,7 +127,7 @@
     <div class="section-title">Befunde nach Impact</div>
     
     <div class="bar-row">
-      <div class="bar-label">Fehlende Titles</div>
+      <div class="bar-label">Fehlende Meta-Titles</div>
       <div class="bar-track"><div class="bar-fill" style="width:56%;background:#E8A400"></div></div>
       <div class="bar-value">278</div>
     </div>
@@ -138,13 +139,13 @@
     </div>
     
     <div class="bar-row">
-      <div class="bar-label">Fehlende H1</div>
+      <div class="bar-label">Fehlende H1-Ueberschriften</div>
       <div class="bar-track"><div class="bar-fill" style="width:2%;background:#2E7D32"></div></div>
       <div class="bar-value">8</div>
     </div>
     
     <div class="bar-row">
-      <div class="bar-label">Fehlende Metas</div>
+      <div class="bar-label">Fehlende Meta-Descriptions</div>
       <div class="bar-track"><div class="bar-fill" style="width:2%;background:#2E7D32"></div></div>
       <div class="bar-value">8</div>
     </div>
@@ -164,7 +165,21 @@
       <div class="action-num">1</div>
       <div class="action-text">
         <span class="action-tag" style="background:#FFF8E1;color:#E8A400">Relevant</span>
-        Wird beim naechsten Crawl automatisch befuellt.
+        # SEO-Audit: rodgau-poolshop.de – Analyse & Empfehlungen
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-num">2</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#E8F5E9;color:#2E7D32">Optimierung</span>
+        ## Crawl-Befunde im Überblick
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-num">3</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#E8F5E9;color:#2E7D32">Optimierung</span>
+        - **Gesamt gecrawlte URLs:** 500
       </div>
     </div>
     </div>
@@ -179,47 +194,38 @@
   </div>
 </div>
 
-<!-- SEITE 2: Technisches SEO -->
+<!-- SEITE 2 -->
 <div class="page" id="p1">
   <div class="header">
-    <div>
-      <h1>Technisches SEO &mdash; www.rodgau-poolshop.de</h1>
-      <p>Crawl: 2026-06-08</p>
-    </div>
+    <div><h1>Technisches SEO &mdash; www.rodgau-poolshop.de</h1><p>Crawl: 2026-06-08</p></div>
   </div>
   <div class="section">
     <div class="section-title">Fehler nach Impact sortiert</div>
     <table>
-      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs (Auszug)</th></tr></thead>
-      <tbody><tr><td>5xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>—</td></tr><tr><td>4xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>—</td></tr><tr><td>Redirects</td><td><span class="chip chip-warn">0</span></td><td>—</td></tr><tr><td>Noindex</td><td><span class="chip chip-warn">0</span></td><td>—</td></tr></tbody>
+      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs</th></tr></thead>
+      <tbody><tr><td>5xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>&mdash;</td></tr><tr><td>4xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>&mdash;</td></tr><tr><td>Redirects</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Noindex</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr></tbody>
     </table>
   </div>
 </div>
 
-<!-- SEITE 3: On-Page -->
+<!-- SEITE 3 -->
 <div class="page" id="p2">
   <div class="header">
-    <div>
-      <h1>On-Page &mdash; www.rodgau-poolshop.de</h1>
-      <p>Crawl: 2026-06-08</p>
-    </div>
+    <div><h1>On-Page &mdash; www.rodgau-poolshop.de</h1><p>Crawl: 2026-06-08</p></div>
   </div>
   <div class="section">
     <div class="section-title">On-Page Befunde nach Impact</div>
     <table>
-      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs (Auszug)</th></tr></thead>
-      <tbody><tr><td>Fehlende Titles</td><td><span class="chip chip-warn">278</span></td><td><br><span style="color:#AAA;font-size:11px">+ 273 weitere</span></td></tr><tr><td>Doppelte Titles</td><td><span class="chip chip-warn">0</span></td><td>—</td></tr><tr><td>Title zu kurz (<30)</td><td><span class="chip chip-warn">0</span></td><td>—</td></tr><tr><td>Title zu lang (>60)</td><td><span class="chip chip-warn">0</span></td><td>—</td></tr><tr><td>Fehlende Metas</td><td><span class="chip chip-warn">8</span></td><td><br><span style="color:#AAA;font-size:11px">+ 3 weitere</span></td></tr><tr><td>Fehlende H1</td><td><span class="chip chip-warn">8</span></td><td><br><span style="color:#AAA;font-size:11px">+ 3 weitere</span></td></tr><tr><td>Fehlende Alt-Texte</td><td><span class="chip chip-ok">14</span></td><td><br><span style="color:#AAA;font-size:11px">+ 9 weitere</span></td></tr></tbody>
+      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs</th></tr></thead>
+      <tbody><tr><td>Fehlende Meta-Titles</td><td><span class="chip chip-warn">278</span></td><td>&mdash;</td></tr><tr><td>Doppelte Meta-Titles</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Meta-Title zu kurz (<30)</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Meta-Title zu lang (>60)</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Fehlende Meta-Descriptions</td><td><span class="chip chip-warn">8</span></td><td>&mdash;</td></tr><tr><td>Fehlende H1-Ueberschriften</td><td><span class="chip chip-warn">8</span></td><td>&mdash;</td></tr><tr><td>Fehlende Alt-Texte (Bilder)</td><td><span class="chip chip-ok">14</span></td><td>&mdash;</td></tr></tbody>
     </table>
   </div>
 </div>
 
-<!-- SEITE 4: Verlauf -->
+<!-- SEITE 4 -->
 <div class="page" id="p3">
   <div class="header">
-    <div>
-      <h1>Verlauf &mdash; www.rodgau-poolshop.de</h1>
-      <p>Monatliche Entwicklung</p>
-    </div>
+    <div><h1>Verlauf &mdash; www.rodgau-poolshop.de</h1><p>Monatliche Entwicklung</p></div>
   </div>
   <div class="section">
     <div class="section-title">Hinweis</div>
@@ -233,17 +239,97 @@
   </div>
 </div>
 
-<!-- SEITE 5: Empfehlungen -->
+<!-- SEITE 5 -->
 <div class="page" id="p4">
   <div class="header">
-    <div>
-      <h1>Empfehlungen &mdash; www.rodgau-poolshop.de</h1>
-      <p>KI-Analyse &middot; Stand: 2026-06-08</p>
-    </div>
+    <div><h1>Empfehlungen &mdash; www.rodgau-poolshop.de</h1><p>KI-Analyse &middot; Stand: 2026-06-08</p></div>
   </div>
   <div class="section">
     <div class="section-title">Priorisierte Handlungsempfehlungen</div>
-    <div class="rec-text">Wird beim naechsten Crawl automatisch befuellt.</div>
+    <div class="rec-text"># SEO-Audit: rodgau-poolshop.de – Analyse & Empfehlungen
+## Crawl-Befunde im Überblick
+- **Gesamt gecrawlte URLs:** 500
+- **Technische Fehler:** Keine (0x 4xx, 0x 5xx)
+- **Indexierungsprobleme:** Keine
+- **On-Page-Defizite:** Ja, strukturiert vorhanden
+---
+## Bewertung der Probleme (priorisiert)
+### 🔴 KRITISCH – Fehlende Title-Tags (278 URLs)
+**Problem:**
+- **278 von 500 URLs** (56 %) haben keinen Title
+- Dies betrifft vermutlich einen großen Teil der Produktseiten oder automatisch generierten Katalogseiten
+**Einschätzung:**
+- **Echter SEO-Hebel:** JA – Title-Tags sind Ranking-Faktor und beeinflussen Click-Through-Rate in SERPs
+- Besonders kritisch bei E-Commerce: Jedes Produkt ohne Title verliert Sichtbarkeitspotenzial
+- Automatisierbare Lösung vorhanden
+**Empfehlung:**
+1. Prüfen, ob es ein CMS-/Shop-Systemverhalten ist (z.B. fehlende Mapping-Regel)
+2. Title-Tags nach Schema generieren: `[Produktname] | [Kategorie] | Rodgau Poolshop`
+3. Priorität auf Produkte mit Traffic/Conversion-Potenzial legen
+4. Template-Lösung implementieren, nicht manuell korrigieren
+---
+### 🟡 RELEVANT – Fehlende H1-Tags (8 URLs)
+**Problem:**
+- 8 URLs ohne H1-Tag
+**Einschätzung:**
+- **Echter SEO-Hebel:** BEDINGT
+- H1 ist wichtig für Nutzer und als semantales Signal, aber kein kritischer Ranking-Faktor
+- 8 URLs sind eine kleine Menge – wahrscheinlich Spezialseiten (Impressum, Datenschutz, Kontakt)
+**Empfehlung:**
+- Vor Änderung prüfen: Sind es wirklich Inhaltsseiten oder administrative Seiten?
+- Falls Produktseiten betroffen: H1 mit Produktnamen ergänzen
+- Falls Admin-Seiten: Kann ignoriert werden
+---
+### 🟡 RELEVANT – Fehlende Meta-Descriptions (8 URLs)
+**Problem:**
+- 8 URLs ohne Meta-Description
+**Einschätzung:**
+- **Echter SEO-Hebel:** MITTEL
+- Meta-Descriptions beeinflussen nicht direkt Rankings, aber CTR in SERPs
+- Trifft vermutlich die gleichen 8 URLs wie fehlende H1 (systematisches Problem)
+**Empfehlung:**
+- Meta-Descriptions für alle Seiten implementieren
+- Format: `[Produktname/Kategorie] – Hochwertige Poolausrüstung bei Rodgau Poolshop. [Kurze USP]. Jetzt entdecken.`
+- Ideallänge: 155–160 Zeichen (Desktop)
+- Automationsregel im CMS setzen
+---
+### 🟢 OPTIMIERUNG – Fehlende Alt-Texte (14 URLs)
+**Problem:**
+- 14 URLs mit Bildern ohne Alt-Attribute
+**Einschätzung:**
+- **Echter SEO-Hebel:** SCHWACH bis MITTEL
+- Alt-Texte helfen bei Bildsuche und Accessibility, haben aber geringen Einfluss auf Haupt-Rankings
+- 14 URLs sind eine kleine Menge
+**Empfehlung:**
+- Alt-Texte hinzufügen für Produktbilder (Beschreibung + relevantes Keyword)
+- Beispiel: `"Intex Ultra Frame Pool 366cm – robuster Poolrahmen"`
+- Bei dekorativen Bildern: Leere Alt-Attribute verwenden (`alt=""`)
+- Nicht-kritisch, aber saubere Umsetzung erhöht Nutzererlebnis
+---
+## Fehlende Probleme (positiv):
+✅ Keine 4xx/5xx-Fehler → technische Basis sauber  
+✅ Keine Redirects erkannt → keine Ketten-Probleme  
+✅ Keine Indexierungsprobleme → alle URLs indexierbar  
+✅ Keine doppelten Titles/Metas → keine Cannibalisierung  
+---
+## Priorisierter Aktionsplan
+### **Woche 1–2: Kritische Title-Tags**
+- CMS-Audit: Wo werden 278 URLs generiert? (Filterseiten? Paginierung? Produktvarianten?)
+- Ursache beheben (meist fehlendes Template oder falsche Feld-Zuordnung)
+- Title-Template für Standardseiten definieren und rollout
+### **Woche 2–3: Meta-Descriptions + H1**
+- Fehlende 8 URLs identifizieren (URL-Liste anfordern)
+- Entscheidung treffen: Admin-Seiten ignorieren oder fixes durchführen
+- Description + H1 Template für Produkte/Kategorien implementieren
+### **Woche 3: Alt-Texte (parallel möglich)**
+- 14 betroffene URLs auflisten
+- Alt-Texte für Produktbilder hinzufügen (bei Serienseiten: Batch-Skript nutzen)
+- Niedrige Priorität, kann schrittweise erfolgen
+---
+## Fazit
+**Hauptproblem:** 56 % der URLs ohne Title-Tags – das ist ein **echtes, systemisches Problem** mit direktem SEO-Impact. Dies deutet auf eine CMS-Konfiguration hin, nicht auf manuelle Fehler.
+**Handlungsbedarf:** Hoch, aber **nicht akut kritisch** (keine Indexierungsprobleme). Fix sollte aber in den nächsten 2 Wochen erfolgen.
+**Realistische Erwartung:** Nach Behebung der Title-Tags werden diese URLs in SERPs besser dargestellt und erhalten mehr organische Impressionen – konkrete %-Zahlen hängen von Wettbewerb und Keyword-Difficulty ab.</div>
   </div>
 </div>
 
