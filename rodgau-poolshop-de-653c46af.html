@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEO Audit &mdash; www.rodgau-poolshop.de</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:#F2F1EE;color:#1A1A1A;min-height:100vh}
+    .page{display:none;padding:24px;max-width:960px;margin:0 auto}
+    .page.active{display:block}
+    .tabs{display:flex;gap:4px;padding:16px 24px 0;max-width:960px;margin:0 auto}
+    .tab{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:transparent;color:#888;font-family:'DM Sans',sans-serif}
+    .tab.active{background:#1A1A1A;color:white}
+    .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #DDDBD6}
+    .header h1{font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:3px}
+    .header p{font-size:12px;color:#888}
+    .badge{display:flex;align-items:center;gap:8px;background:white;border:1px solid #E5E3DE;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:500;white-space:nowrap}
+    .badge-dot{width:7px;height:7px;border-radius:50%}
+    .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+    .scorecard{background:white;border:1px solid #E5E3DE;border-radius:10px;padding:16px 18px;position:relative}
+    .sc-dot{position:absolute;top:14px;right:14px;width:6px;height:6px;border-radius:50%}
+    .sc-label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+    .sc-value{font-size:30px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-1px;line-height:1}
+    .sc-sub{font-size:11px;color:#AAA;margin-top:4px}
+    .section{background:white;border:1px solid #E5E3DE;border-radius:10px;padding:18px 20px;margin-bottom:10px}
+    .section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:14px}
+    .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .bar-label{font-size:13px;width:200px;flex-shrink:0;color:#444}
+    .bar-track{flex:1;height:6px;background:#F0EEE9;border-radius:3px;overflow:hidden}
+    .bar-fill{height:100%;border-radius:3px}
+    .bar-value{font-size:12px;font-family:'DM Mono',monospace;font-weight:500;width:36px;text-align:right}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .action-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #F0EEE9}
+    .action-item:last-child{border-bottom:none}
+    .action-num{width:22px;height:22px;border-radius:50%;background:#1A1A1A;color:white;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .action-text{font-size:13px;line-height:1.5;color:#333}
+    .action-tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+    .info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0EEE9;font-size:13px}
+    .info-row:last-child{border-bottom:none}
+    .info-label{color:#888}
+    .info-value{font-weight:500;font-family:'DM Mono',monospace;font-size:12px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;padding:8px 10px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#888;border-bottom:2px solid #F0EEE9}
+    td{padding:8px 10px;border-bottom:1px solid #F5F3EF;color:#333;font-size:13px;vertical-align:top}
+    tr:last-child td{border-bottom:none}
+    a.url{font-family:'DM Mono',monospace;font-size:11px;color:#1565C0;text-decoration:none;word-break:break-all}
+    a.url:hover{text-decoration:underline}
+    .chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+    .chip-crit{background:#FDECEA;color:#C62828}
+    .chip-warn{background:#FFF8E1;color:#E8A400}
+    .chip-ok{background:#E8F5E9;color:#2E7D32}
+    .rec-html{font-size:13px;line-height:1.8;color:#333}
+    .trend-note{background:#E8F5E9;border-radius:8px;padding:12px 16px;font-size:13px;color:#2E7D32;margin-top:10px}
+    </style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPage(0,this)">Übersicht</button>
+  <button class="tab" onclick="showPage(1,this)">Technisches SEO</button>
+  <button class="tab" onclick="showPage(2,this)">On-Page</button>
+  <button class="tab" onclick="showPage(3,this)">Verlauf</button>
+  <button class="tab" onclick="showPage(4,this)">Empfehlungen</button>
+</div>
+
+<!-- SEITE 1 -->
+<div class="page active" id="p0">
+  <div class="header">
+    <div>
+      <h1>SEO Audit &mdash; www.rodgau-poolshop.de</h1>
+      <p>Monatliches Monitoring &middot; Letzter Crawl: 2026-06-10</p>
+    </div>
+    <div class="badge">
+      <div class="badge-dot" style="background:#C62828"></div>
+      Kritische Probleme
+    </div>
+  </div>
+
+  <div class="sc-grid">
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#AAA"></div>
+      <div class="sc-label">Gecrawlte URLs</div>
+      <div class="sc-value" style="color:#1A1A1A">500</div>
+      <div class="sc-sub">Seiten analysiert</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#C62828"></div>
+      <div class="sc-label">4xx Fehler</div>
+      <div class="sc-value" style="color:#C62828">2</div>
+      <div class="sc-sub">Fehlerhafte Seiten</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#2E7D32"></div>
+      <div class="sc-label">5xx Fehler</div>
+      <div class="sc-value" style="color:#2E7D32">0</div>
+      <div class="sc-sub">Server-Fehler</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#E8A400"></div>
+      <div class="sc-label">Meta-Title fehlt</div>
+      <div class="sc-value" style="color:#E8A400">1</div>
+      <div class="sc-sub">von 500 Seiten</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#E8A400"></div>
+      <div class="sc-label">H1 fehlt</div>
+      <div class="sc-value" style="color:#E8A400">8</div>
+      <div class="sc-sub">Prüfung empfohlen</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#E8A400"></div>
+      <div class="sc-label">Meta-Description fehlt</div>
+      <div class="sc-value" style="color:#E8A400">8</div>
+      <div class="sc-sub">von 500 Seiten</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Befunde nach Impact</div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende Meta-Titles</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0%;background:#E8A400"></div></div>
+      <div class="bar-value">1</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende Alt-Texte</div>
+      <div class="bar-track"><div class="bar-fill" style="width:3%;background:#2E7D32"></div></div>
+      <div class="bar-value">14</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende H1-Überschriften</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2%;background:#2E7D32"></div></div>
+      <div class="bar-value">8</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende Meta-Descriptions</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2%;background:#2E7D32"></div></div>
+      <div class="bar-value">8</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">4xx / 5xx Fehler</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0%;background:#C62828"></div></div>
+      <div class="bar-value">2</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title">Top-3 Maßnahmen</div>
+      
+    <div class="action-item">
+      <div class="action-num">1</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#FFF8E1;color:#E8A400">Relevant</span>
+        2 defekte 404-Fehler (Poolabdeckung, Mozilla-Support) identifizieren und beheben oder weiterleiten
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-num">2</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#E8F5E9;color:#2E7D32">Optimierung</span>
+        41 Produktseiten mit zu langen Titles (>60 Zeichen) kürzen für bessere SERP-Darstellung
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-num">3</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#E8F5E9;color:#2E7D32">Optimierung</span>
+        14 Bilder ohne Alt-Texte mit beschreibenden Texten versehen für Accessibility und Bildersuche
+      </div>
+    </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Crawl-Details</div>
+      <div class="info-row"><span class="info-label">Letzter Crawl</span><span class="info-value">2026-06-10</span></div>
+      <div class="info-row"><span class="info-label">Gecrawlte URLs</span><span class="info-value">500</span></div>
+      <div class="info-row"><span class="info-label">Redirects</span><span class="info-value">5</span></div>
+      <div class="info-row"><span class="info-label">Noindex-Seiten</span><span class="info-value">0</span></div>
+      <div class="info-row"><span class="info-label">Gesamtstatus</span><span class="info-value" style="color:#C62828">Kritische Probleme</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEITE 2 -->
+<div class="page" id="p1">
+  <div class="header">
+    <div><h1>Technisches SEO &mdash; www.rodgau-poolshop.de</h1><p>Crawl: 2026-06-10</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Fehler nach Impact sortiert</div>
+    <table>
+      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs</th></tr></thead>
+      <tbody><tr><td>5xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>&mdash;</td></tr><tr><td>4xx Fehler</td><td><span class="chip chip-crit">2</span></td><td><button onclick="toggleUrls(this,'urls-592921')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">2 URLs anzeigen</button><div id="urls-592921" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/poolabdeckung/solarfolie-solarplane/poolabdeckung-coolguard-500-my/" target="_blank" class="url">https://www.rodgau-poolshop.de/poolabdeckung/solarfolie-solarplane/poolabdeckung-coolguard-500-my/</a><br><a href="https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer" target="_blank" class="url">https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer</a></div></td></tr><tr><td>Redirects</td><td><span class="chip chip-warn">5</span></td><td><button onclick="toggleUrls(this,'urls-385447')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">5 URLs anzeigen</button><div id="urls-385447" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/account" target="_blank" class="url">https://www.rodgau-poolshop.de/account</a><br><a href="http://www.verbraucher-schlichter.de/" target="_blank" class="url">http://www.verbraucher-schlichter.de/</a><br><a href="https://www.trustedshops.de/impressum/" target="_blank" class="url">https://www.trustedshops.de/impressum/</a><br><a href="http://www.trustedshops.de/impressum/" target="_blank" class="url">http://www.trustedshops.de/impressum/</a><br><a href="https://support.microsoft.com/de-de/help/4027947/microsoft-edge-delete-cookies" target="_blank" class="url">https://support.microsoft.com/de-de/help/4027947/microsoft-edge-delete-cookies</a></div></td></tr><tr><td>Noindex</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEITE 3 -->
+<div class="page" id="p2">
+  <div class="header">
+    <div><h1>On-Page &mdash; www.rodgau-poolshop.de</h1><p>Crawl: 2026-06-10</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">On-Page Befunde nach Impact</div>
+    <table>
+      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs</th></tr></thead>
+      <tbody><tr><td>Fehlende Meta-Titles</td><td><span class="chip chip-warn">1</span></td><td><button onclick="toggleUrls(this,'urls-263700')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">1 URLs anzeigen</button><div id="urls-263700" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/cookie/offcanvas" target="_blank" class="url">https://www.rodgau-poolshop.de/cookie/offcanvas</a></div></td></tr><tr><td>Doppelte Meta-Titles</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Meta-Title zu kurz (<30)</td><td><span class="chip chip-warn">20</span></td><td><button onclick="toggleUrls(this,'urls-248579')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">20 URLs anzeigen</button><div id="urls-248579" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/informationen/agb/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/agb/</a><br><a href="https://www.rodgau-poolshop.de/informationen/kontakt/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/kontakt/</a><br><a href="https://www.rodgau-poolshop.de/informationen/versand-und-zahlung/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/versand-und-zahlung/</a><br><a href="https://www.rodgau-poolshop.de/informationen/impressum/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/impressum/</a><br><a href="https://www.rodgau-poolshop.de/ueber-uns/" target="_blank" class="url">https://www.rodgau-poolshop.de/ueber-uns/</a><br><a href="https://www.rodgau-poolshop.de/cookie/offcanvas" target="_blank" class="url">https://www.rodgau-poolshop.de/cookie/offcanvas</a><br><a href="https://www.rodgau-poolshop.de/informationen/datenschutz/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/datenschutz/</a><br><a href="https://www.rodgau-poolshop.de/informationen/widerrufsbelehrungen/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/widerrufsbelehrungen/</a><br><a href="https://www.rodgau-poolshop.de/dosierschwimmer" target="_blank" class="url">https://www.rodgau-poolshop.de/dosierschwimmer</a><br><a href="https://www.rodgau-poolshop.de/handbuerste" target="_blank" class="url">https://www.rodgau-poolshop.de/handbuerste</a><br><a href="https://www.rodgau-poolshop.de/badethermometer-rund" target="_blank" class="url">https://www.rodgau-poolshop.de/badethermometer-rund</a><br><a href="https://www.rodgau-poolshop.de/pool-thermometer-ente" target="_blank" class="url">https://www.rodgau-poolshop.de/pool-thermometer-ente</a><br><a href="https://www.rodgau-poolshop.de/bodenkescher-deluxe" target="_blank" class="url">https://www.rodgau-poolshop.de/bodenkescher-deluxe</a><br><a href="https://www.rodgau-poolshop.de/eckbuerste" target="_blank" class="url">https://www.rodgau-poolshop.de/eckbuerste</a><br><a href="https://www.rodgau-poolshop.de/handschwamm" target="_blank" class="url">https://www.rodgau-poolshop.de/handschwamm</a><br><a href="https://www.rodgau-poolshop.de/ratgeber/" target="_blank" class="url">https://www.rodgau-poolshop.de/ratgeber/</a><br><a href="https://www.rodgau-poolshop.de/Informationen/Kontakt/" target="_blank" class="url">https://www.rodgau-poolshop.de/Informationen/Kontakt/</a><br><a href="https://www.rodgau-poolshop.de/poolpumpe-aqua-plus-4" target="_blank" class="url">https://www.rodgau-poolshop.de/poolpumpe-aqua-plus-4</a><br><a href="https://www.rodgau-poolshop.de/poolpumpe-aqua-plus-6" target="_blank" class="url">https://www.rodgau-poolshop.de/poolpumpe-aqua-plus-6</a><br><a href="https://www.rodgau-poolshop.de/poolpumpe-aqua-plus-8" target="_blank" class="url">https://www.rodgau-poolshop.de/poolpumpe-aqua-plus-8</a></div></td></tr><tr><td>Meta-Title zu lang (>60)</td><td><span class="chip chip-warn">41</span></td><td><button onclick="toggleUrls(this,'urls-883024')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">20 URLs anzeigen</button><div id="urls-883024" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/pool-zubehoer/" target="_blank" class="url">https://www.rodgau-poolshop.de/pool-zubehoer/</a><br><a href="https://www.rodgau-poolshop.de/pool-zubehoer/fittinge-zubehoer/" target="_blank" class="url">https://www.rodgau-poolshop.de/pool-zubehoer/fittinge-zubehoer/</a><br><a href="https://www.rodgau-poolshop.de/solarfolie-geobubble-400-my-hellblau-rechteck/SW10040.11" target="_blank" class="url">https://www.rodgau-poolshop.de/solarfolie-geobubble-400-my-hellblau-rechteck/SW10040.11</a><br><a href="https://www.rodgau-poolshop.de/poolabdeckung/solarfolie-solarplane/solarfolie-geobubble-dunkelblau-500-my/" target="_blank" class="url">https://www.rodgau-poolshop.de/poolabdeckung/solarfolie-solarplane/solarfolie-geobubble-dunkelblau-500-my/</a><br><a href="https://www.rodgau-poolshop.de/pool-zubehoer/fittinge-zubehoer/schlaeuche-stutzen/" target="_blank" class="url">https://www.rodgau-poolshop.de/pool-zubehoer/fittinge-zubehoer/schlaeuche-stutzen/</a><br><a href="https://www.rodgau-poolshop.de/vorteile-luftpolster-poolabdeckungen/" target="_blank" class="url">https://www.rodgau-poolshop.de/vorteile-luftpolster-poolabdeckungen/</a><br><a href="https://www.rodgau-poolshop.de/solarplane-energyguard-midnight-blue-500-my-geobubble-achtform/465726" target="_blank" class="url">https://www.rodgau-poolshop.de/solarplane-energyguard-midnight-blue-500-my-geobubble-achtform/465726</a><br><a href="https://www.rodgau-poolshop.de/solarplane-energyguard-midnight-blue-500-my-geobubble-oval/465715" target="_blank" class="url">https://www.rodgau-poolshop.de/solarplane-energyguard-midnight-blue-500-my-geobubble-oval/465715</a><br><a href="https://www.rodgau-poolshop.de/solarplane-500-my-geobubble-energyguard-midnight/blue-nach-mass-per-m2" target="_blank" class="url">https://www.rodgau-poolshop.de/solarplane-500-my-geobubble-energyguard-midnight/blue-nach-mass-per-m2</a><br><a href="https://www.rodgau-poolshop.de/isolier-und-schutzvlies/45520" target="_blank" class="url">https://www.rodgau-poolshop.de/isolier-und-schutzvlies/45520</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-achtformpool-0-6-mm-tiefe-1-20-m-mit-einhaengebiese/1602124730" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-achtformpool-0-6-mm-tiefe-1-20-m-mit-einhaengebiese/1602124730</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-achtformpool-0-8-mm-tiefe-1-50-m-mit-einhaengebiese/1802155435" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-achtformpool-0-8-mm-tiefe-1-50-m-mit-einhaengebiese/1802155435</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-8-mm-tiefe-1-50-m-mit-einhaengebiese/1801153000" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-8-mm-tiefe-1-50-m-mit-einhaengebiese/1801153000</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-achtformpool-0-6-mm-tiefe-1-50-m-mit-einhaengebiese/1602156236" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-achtformpool-0-6-mm-tiefe-1-50-m-mit-einhaengebiese/1602156236</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-8-mm-tiefe-1-20-m-mit-einhaengebiese/1801123000" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-8-mm-tiefe-1-20-m-mit-einhaengebiese/1801123000</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-6-mm-tiefe-1-20-m-mit-einhaengebiese/1601123000" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-6-mm-tiefe-1-20-m-mit-einhaengebiese/1601123000</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-ovalpool-0-8-mm-tiefe-1-50-m-mit-einhaengebiese/1803154930" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-ovalpool-0-8-mm-tiefe-1-50-m-mit-einhaengebiese/1803154930</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-ovalpool-0-6-mm-tiefe-1-20-m-mit-einhaengebiese/1603125030" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-ovalpool-0-6-mm-tiefe-1-20-m-mit-einhaengebiese/1603125030</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-6-mm-tiefe-1-50-m-mit-einhaengebiese/1601154500" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-rundpool-0-6-mm-tiefe-1-50-m-mit-einhaengebiese/1601154500</a><br><a href="https://www.rodgau-poolshop.de/poolfolie-innenhuelle-ovalpool-0-8-mm-tiefe-1-20-m-mit-einhaengebiese/1803124930" target="_blank" class="url">https://www.rodgau-poolshop.de/poolfolie-innenhuelle-ovalpool-0-8-mm-tiefe-1-20-m-mit-einhaengebiese/1803124930</a></div></td></tr><tr><td>Fehlende Meta-Descriptions</td><td><span class="chip chip-warn">8</span></td><td><button onclick="toggleUrls(this,'urls-248579')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">8 URLs anzeigen</button><div id="urls-248579" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/informationen/agb/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/agb/</a><br><a href="https://www.rodgau-poolshop.de/informationen/kontakt/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/kontakt/</a><br><a href="https://www.rodgau-poolshop.de/informationen/versand-und-zahlung/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/versand-und-zahlung/</a><br><a href="https://www.rodgau-poolshop.de/informationen/impressum/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/impressum/</a><br><a href="https://www.rodgau-poolshop.de/cookie/offcanvas" target="_blank" class="url">https://www.rodgau-poolshop.de/cookie/offcanvas</a><br><a href="https://www.rodgau-poolshop.de/informationen/datenschutz/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/datenschutz/</a><br><a href="https://www.rodgau-poolshop.de/informationen/widerrufsbelehrungen/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/widerrufsbelehrungen/</a><br><a href="https://www.rodgau-poolshop.de/Informationen/Kontakt/" target="_blank" class="url">https://www.rodgau-poolshop.de/Informationen/Kontakt/</a></div></td></tr><tr><td>Fehlende H1-Überschriften</td><td><span class="chip chip-warn">8</span></td><td><button onclick="toggleUrls(this,'urls-248579')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">8 URLs anzeigen</button><div id="urls-248579" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/informationen/agb/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/agb/</a><br><a href="https://www.rodgau-poolshop.de/informationen/kontakt/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/kontakt/</a><br><a href="https://www.rodgau-poolshop.de/informationen/versand-und-zahlung/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/versand-und-zahlung/</a><br><a href="https://www.rodgau-poolshop.de/informationen/impressum/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/impressum/</a><br><a href="https://www.rodgau-poolshop.de/cookie/offcanvas" target="_blank" class="url">https://www.rodgau-poolshop.de/cookie/offcanvas</a><br><a href="https://www.rodgau-poolshop.de/informationen/datenschutz/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/datenschutz/</a><br><a href="https://www.rodgau-poolshop.de/informationen/widerrufsbelehrungen/" target="_blank" class="url">https://www.rodgau-poolshop.de/informationen/widerrufsbelehrungen/</a><br><a href="https://www.rodgau-poolshop.de/Informationen/Kontakt/" target="_blank" class="url">https://www.rodgau-poolshop.de/Informationen/Kontakt/</a></div></td></tr><tr><td>Fehlende Alt-Texte (Bilder)</td><td><span class="chip chip-ok">14</span></td><td><button onclick="toggleUrls(this,'urls-948125')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">14 URLs anzeigen</button><div id="urls-948125" style="display:none;margin-top:6px"><a href="https://www.rodgau-poolshop.de/media/2b/c7/13/1668591688/winterfest_800x800.jpg?ts=1668591688" target="_blank" class="url">https://www.rodgau-poolshop.de/media/2b/c7/13/1668591688/winterfest_800x800.jpg?ts=1668591688</a><br><a href="https://www.rodgau-poolshop.de/media/48/07/3e/1668585780/rundbecken-1-620.jpg?ts=1751554784" target="_blank" class="url">https://www.rodgau-poolshop.de/media/48/07/3e/1668585780/rundbecken-1-620.jpg?ts=1751554784</a><br><a href="https://www.rodgau-poolshop.de/media/07/39/50/1674637799/solarabsorber-eccolar-zaunmontage-3.jpg?ts=1751554616" target="_blank" class="url">https://www.rodgau-poolshop.de/media/07/39/50/1674637799/solarabsorber-eccolar-zaunmontage-3.jpg?ts=1751554616</a><br><a href="https://www.rodgau-poolshop.de/media/d0/09/86/1668585771/ovalbecken-1-620.jpg?ts=1751554722" target="_blank" class="url">https://www.rodgau-poolshop.de/media/d0/09/86/1668585771/ovalbecken-1-620.jpg?ts=1751554722</a><br><a href="https://www.rodgau-poolshop.de/media/e0/4d/54/1668585753/achtformbecken-1-620.jpg?ts=1751554762" target="_blank" class="url">https://www.rodgau-poolshop.de/media/e0/4d/54/1668585753/achtformbecken-1-620.jpg?ts=1751554762</a><br><a href="https://www.rodgau-poolshop.de/media/de/74/bc/1668591663/500my-Thermo-Sol-Guard_800x800.jpg?ts=1751441491" target="_blank" class="url">https://www.rodgau-poolshop.de/media/de/74/bc/1668591663/500my-Thermo-Sol-Guard_800x800.jpg?ts=1751441491</a><br><a href="https://www.rodgau-poolshop.de/media/66/5b/94/1669020386/geobubble.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/media/66/5b/94/1669020386/geobubble.jpg</a><br><a href="https://www.rodgau-poolshop.de/media/4a/49/c9/1675068383/Solarabsorber-Eccolar-460.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/media/4a/49/c9/1675068383/Solarabsorber-Eccolar-460.jpg</a><br><a href="https://www.rodgau-poolshop.de/media/45/7c/db/1675068374/aufbau.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/media/45/7c/db/1675068374/aufbau.jpg</a><br><a href="https://www.rodgau-poolshop.de/thumbnail/a6/cb/2f/1669105160/skimmer-ocean-dinmension-2_600x600_1920x1920.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/thumbnail/a6/cb/2f/1669105160/skimmer-ocean-dinmension-2_600x600_1920x1920.jpg</a><br><a href="https://www.rodgau-poolshop.de/media/2e/a9/cf/1733476286/Grif-WDF.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/media/2e/a9/cf/1733476286/Grif-WDF.jpg</a><br><a href="https://www.rodgau-poolshop.de/media/60/ac/97/1733472244/TG-Butan.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/media/60/ac/97/1733472244/TG-Butan.jpg</a><br><a href="https://www.rodgau-poolshop.de/media/ca/25/a9/1678105572/solarfolie-slider-2018-1280x1280.jpg?ts=1678105572" target="_blank" class="url">https://www.rodgau-poolshop.de/media/ca/25/a9/1678105572/solarfolie-slider-2018-1280x1280.jpg?ts=1678105572</a><br><a href="https://www.rodgau-poolshop.de/media/6e/45/9e/1669019421/abdeckfolie-250_600x600.jpg" target="_blank" class="url">https://www.rodgau-poolshop.de/media/6e/45/9e/1669019421/abdeckfolie-250_600x600.jpg</a></div></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEITE 4 -->
+<div class="page" id="p3">
+  <div class="header">
+    <div><h1>Verlauf &mdash; www.rodgau-poolshop.de</h1><p>Monatliche Entwicklung</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Hinweis</div>
+    <p style="font-size:13px;color:#666;line-height:1.6">
+      Der Verlauf wird nach dem zweiten monatlichen Crawl sichtbar.<br>
+      Ab dann zeigt diese Seite automatisch die Entwicklung aller Kennzahlen im Zeitverlauf.
+    </p>
+    <div class="trend-note" style="margin-top:16px">
+      Erster Crawl: 2026-06-10 &mdash; 500 URLs &mdash; Kritische Probleme
+    </div>
+  </div>
+</div>
+
+<!-- SEITE 5 -->
+<div class="page" id="p4">
+  <div class="header">
+    <div><h1>Empfehlungen &mdash; www.rodgau-poolshop.de</h1><p>KI-Analyse &middot; Stand: 2026-06-10</p></div>
+  </div>
+  <div class="section" style="margin-bottom:10px;border-left:3px solid #DDDBD6">
+    <div class="section-title">Zusammenfassung</div>
+    <div class="rec-html"><p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>TOP1: 2 defekte 404-Fehler (Poolabdeckung, Mozilla-Support) identifizieren und beheben oder weiterleiten</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>TOP2: 41 Produktseiten mit zu langen Titles (>60 Zeichen) kürzen für bessere SERP-Darstellung</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>TOP3: 14 Bilder ohne Alt-Texte mit beschreibenden Texten versehen für Accessibility und Bildersuche</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Priorisierte Handlungsempfehlungen</div>
+    <div class="rec-html"><p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Kurzzusammenfassung:</strong></p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 2 externe 404-Fehler beeinträchtigen Nutzererlebnis und Crawl-Effizienz, einer ist eine interne Produktseite</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 20 Seiten mit zu kurzen, 41 mit zu langen Titles – Title-Optimierung ist niedrigschwelliger Hebel</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 8 Information-Seiten (AGB, Datenschutz, Kontakt) ohne Meta-Descriptions und H1 – vernachlässigbar, da nicht rankingrelevant</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 14 Bilder ohne Alt-Texte sind Accessibility-Problem und Chance für Bildersuche</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Technische Basis solide: keine 5xx-Fehler, keine Indexierungsprobleme erkannt</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>1. 4xx-Fehler beheben (2 URLs) – HOHES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: Zwei URLs liefern 404-Fehler. Eine ist interne Produktseite (Poolabdeckung CoolGuard), die andere ist ein externer Link zur Mozilla-Support-Seite.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Die interne Produktseite ist ein echter Fehler. Der Mozilla-Link ist wahrscheinlich ein Cookie-Hinweis-Link (nicht relevant).</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Überprüfen Sie, ob die CoolGuard-Produktseite noch existiert oder unter anderem URL erreichbar ist. Falls gelöscht, weiteres Feedback nicht nötig.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Falls die Seite existiert, URL-Struktur/Pfad korrigieren oder Redirect einrichten.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Den Mozilla-Support-Link in Cookie-Policies durch die aktuelle URL ersetzen (falls notwendig).</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>2. Title-Längen optimieren (61 URLs) – ERHOEHTES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: 20 Seiten mit zu kurzen Titles (<30 Zeichen), 41 Seiten mit zu langen Titles (>60 Zeichen).</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Echter Hebel. Zu lange Titles werden in der Google-Vorschau abgeschnitten (Desktop ~60 Zeichen, Mobile ~40). Zu kurze Titles nutzen Platz nicht aus und wirken wenig aussagekräftig.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Kategorieseiten (Pool-Zubehör, Fittinge): Titles auf 50–60 Zeichen mit Keyword + Branding optimieren. Beispiel statt „Solarplane energyguard midnight blue 500 my geobubble achtform": „Solarplane Energyguard Achtform | Rodgau Poolshop"</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Produktseiten mit langen Titles (Poolfolien mit technischen Spezifikationen): Kürzen auf das Essenzielle (Material, Dimension, Größe), sekundäre Details in Meta-Description verlagern.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Kurzseiten (Dosierschwimmer, Handbürste): Titles um Kontext erweitern, z. B. „Dosierschwimmer | Pool-Zubehör kaufen"</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>3. Meta-Descriptions hinzufügen (8 URLs) – ERHOEHTES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: 8 Seiten ohne Meta-Descriptions, alle sind Informationsseiten (AGB, Datenschutz, Kontakt, Impressum, Cookie-Seite).</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Für Informationsseiten nicht rankingrelevant. Aber: Fehlende Descriptions führen dazu, dass Google automatische Snippets generiert, die möglicherweise weniger aussagekräftig sind. Für diese Seiten ist das Risiko gering.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Niedrige Priorität. Falls zeitliche Kapazität vorhanden, kurze Descriptions für Kontakt- und Datenschutzseite ergänzen (z. B. „Datenschutzerklärung von Rodgau Poolshop – Informationen zu Ihrer Privatsphäre und Datenverarbeitung").</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Nicht zwingend erforderlich.</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>4. Fehlende H1-Struktur (8 URLs) – ERHOEHTES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: 8 Seiten ohne H1, identisch mit den fehlenden Meta-Descriptions.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Formal korrekt, praktisch irrelevant. H1 auf Impressum oder AGB ist kein Ranking-Faktor. Seiten ohne H1 sind typischerweise rechtliche/administrative Seiten, nicht Inhaltsseiten.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Keine Aktion erforderlich. Das ist eine formale Abweichung ohne SEO-Auswirkung.</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>5. Alt-Texte bei Bildern ergänzen (14 URLs) – WEITERES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: 14 Bilder ohne Alt-Attribute. Beispiele: Produktfotos (Poolabdeckungen, Solarabsorber), Kategoriebilder.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Echter, aber moderater Hebel. Alt-Texte sind relevant für:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Google Images Visibility (insbesondere für Produkte wie Solarfolien, Poolpumpen)</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Accessibility (WCAG-Konformität)</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Backup-Text, falls Bild nicht lädt</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Alt-Texte hinzufügen mit kurzen, aussagekräftigen Beschreibungen. Beispiele:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>- „Solarfolie Geobubble 500 my Dunkelblau – Poolabdeckung"</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>- „Solarabsorber Eccolar Zaunmontage – Solarpanel für Poolheizung"</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>- „Rundbecken Stahlwand-Swimmingpool"</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Keine Keywords überladen, Natürlichkeit bewahren.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Systematisch vorgehen: Datei-für-Datei in Verwaltungssystem durchgehen.</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>6. Redirects überprüfen (5 URLs) – WEITERES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: 5 Redirects erkannt, darunter externe Links (Verbraucher-Schlichter, Trusted Shops, Microsoft Edge, Mozilla Firefox).</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Teils legitim (externe Links zu Drittanbietern), teils fragwürdig (Account-Redirect). Die externen Redirects sind Informations-Links und üblicherweise unkritisch.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Account-Redirect überprüfen: Falls `/account` auf eine andere URL weitergeleitet wird, sicherstellen, dass die Ziel-URL erreicht wird. Ansonsten unkritisch.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Externe Redirects (Trusted Shops, Mozilla) sind typisch für Cookie-Hinweise und Compliance-Links – keine Optimierung nötig.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Falls möglich, direkte Links statt Redirects verwenden (spart einen HTTP-Request).</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>7. Doppelte Inhalte (Case-Sensitivity) – FORMALE ANMERKUNG</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Problem: URL `/Informationen/Kontakt/` (mit Großbuchstaben) und `/informationen/kontakt/` (Kleinbuchstaben) werden beide indexiert.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Einschätzung: Potenzielles Duplicate-Content-Problem, aber meist vom Server gelöst (HTTP-Canonicalize). Google behandelt URLs üblicherweise Case-Insensitiv.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Empfehlung:</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Überprüfen, ob Server canonical-Tags setzt oder 301-Redirects einleitet.</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Falls nicht: Eine konsistente URL-Schreibweise durchsetzen (Kleinbuchstaben Standard). Großbuchstaben-Version via 301 auf Kleinbuchstaben umleiten.</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Priorisierter Aktionsplan (realistische Wochenschritte):</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Woche 1–2: Quick Wins</strong></p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 4xx-Fehler (CoolGuard-Produktseite) lokalisieren und beheben oder redirecten</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 41 zu lange Titles identifizieren und kürzen (Fokus: Top-20 nach Traffic)</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Woche 3–4: Mid-Priority</strong></p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 20 zu kurze Titles erweitern</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• 14 fehlende Alt-Texte systematisch ergänzen (Fokus: Produktfotos und Kategoriebilder)</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Woche 5: Dokumentation & QA</strong></p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Case-Sensitivity der Kontakt-URL überprüfen und konsolidieren</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Crawl-Validierung durchführen und problematische URLs re-checken</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Optional (niedrige Priorität):</strong></p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>• Meta-Descriptions für Informationsseiten ergänzen (zeitintensiv, wenig Impact)</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Diese Maßnahmen adressieren die handhabbaren Probleme ohne technische Tiefenarbeit.</p></div>
+  </div>
+</div>
+
+<script>
+function showPage(idx, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('p' + idx).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleUrls(btn, id) {
+  var el = document.getElementById(id);
+  var count = el.querySelectorAll('a').length;
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    btn.textContent = 'Weniger anzeigen';
+  } else {
+    el.style.display = 'none';
+    btn.textContent = count + ' URLs anzeigen';
+  }
+}
+</script>
+</body>
+</html>
