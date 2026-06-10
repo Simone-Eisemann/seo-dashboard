@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEO Audit &mdash; just-sound.de</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:#F2F1EE;color:#1A1A1A;min-height:100vh}
+    .page{display:none;padding:24px;max-width:960px;margin:0 auto}
+    .page.active{display:block}
+    .tabs{display:flex;gap:4px;padding:16px 24px 0;max-width:960px;margin:0 auto}
+    .tab{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:transparent;color:#888;font-family:'DM Sans',sans-serif}
+    .tab.active{background:#1A1A1A;color:white}
+    .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #DDDBD6}
+    .header h1{font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:3px}
+    .header p{font-size:12px;color:#888}
+    .badge{display:flex;align-items:center;gap:8px;background:white;border:1px solid #E5E3DE;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:500;white-space:nowrap}
+    .badge-dot{width:7px;height:7px;border-radius:50%}
+    .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+    .scorecard{background:white;border:1px solid #E5E3DE;border-radius:10px;padding:16px 18px;position:relative}
+    .sc-dot{position:absolute;top:14px;right:14px;width:6px;height:6px;border-radius:50%}
+    .sc-label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+    .sc-value{font-size:30px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-1px;line-height:1}
+    .sc-sub{font-size:11px;color:#AAA;margin-top:4px}
+    .section{background:white;border:1px solid #E5E3DE;border-radius:10px;padding:18px 20px;margin-bottom:10px}
+    .section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:14px}
+    .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .bar-label{font-size:13px;width:200px;flex-shrink:0;color:#444}
+    .bar-track{flex:1;height:6px;background:#F0EEE9;border-radius:3px;overflow:hidden}
+    .bar-fill{height:100%;border-radius:3px}
+    .bar-value{font-size:12px;font-family:'DM Mono',monospace;font-weight:500;width:36px;text-align:right}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .action-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #F0EEE9}
+    .action-item:last-child{border-bottom:none}
+    .action-num{width:22px;height:22px;border-radius:50%;background:#1A1A1A;color:white;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .action-text{font-size:13px;line-height:1.5;color:#333}
+    .action-tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+    .info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0EEE9;font-size:13px}
+    .info-row:last-child{border-bottom:none}
+    .info-label{color:#888}
+    .info-value{font-weight:500;font-family:'DM Mono',monospace;font-size:12px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;padding:8px 10px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#888;border-bottom:2px solid #F0EEE9}
+    td{padding:8px 10px;border-bottom:1px solid #F5F3EF;color:#333;font-size:13px;vertical-align:top}
+    tr:last-child td{border-bottom:none}
+    a.url{font-family:'DM Mono',monospace;font-size:11px;color:#1565C0;text-decoration:none;word-break:break-all}
+    a.url:hover{text-decoration:underline}
+    .chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+    .chip-crit{background:#FDECEA;color:#C62828}
+    .chip-warn{background:#FFF8E1;color:#E8A400}
+    .chip-ok{background:#E8F5E9;color:#2E7D32}
+    .rec-html{font-size:13px;line-height:1.8;color:#333}
+    .trend-note{background:#E8F5E9;border-radius:8px;padding:12px 16px;font-size:13px;color:#2E7D32;margin-top:10px}
+    </style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPage(0,this)">Übersicht</button>
+  <button class="tab" onclick="showPage(1,this)">Technisches SEO</button>
+  <button class="tab" onclick="showPage(2,this)">On-Page</button>
+  <button class="tab" onclick="showPage(3,this)">Verlauf</button>
+  <button class="tab" onclick="showPage(4,this)">Empfehlungen</button>
+</div>
+
+<!-- SEITE 1 -->
+<div class="page active" id="p0">
+  <div class="header">
+    <div>
+      <h1>SEO Audit &mdash; just-sound.de</h1>
+      <p>Monatliches Monitoring &middot; Letzter Crawl: 2026-06-10</p>
+    </div>
+    <div class="badge">
+      <div class="badge-dot" style="background:#E8A400"></div>
+      Handlungsbedarf
+    </div>
+  </div>
+
+  <div class="sc-grid">
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#AAA"></div>
+      <div class="sc-label">Gecrawlte URLs</div>
+      <div class="sc-value" style="color:#1A1A1A">489</div>
+      <div class="sc-sub">Seiten analysiert</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#2E7D32"></div>
+      <div class="sc-label">4xx Fehler</div>
+      <div class="sc-value" style="color:#2E7D32">0</div>
+      <div class="sc-sub">Fehlerhafte Seiten</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#2E7D32"></div>
+      <div class="sc-label">5xx Fehler</div>
+      <div class="sc-value" style="color:#2E7D32">0</div>
+      <div class="sc-sub">Server-Fehler</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#E8A400"></div>
+      <div class="sc-label">Meta-Title fehlt</div>
+      <div class="sc-value" style="color:#E8A400">389</div>
+      <div class="sc-sub">von 489 Seiten</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#E8A400"></div>
+      <div class="sc-label">H1 fehlt</div>
+      <div class="sc-value" style="color:#E8A400">6</div>
+      <div class="sc-sub">Prüfung empfohlen</div>
+    </div>
+    
+    <div class="scorecard">
+      <div class="sc-dot" style="background:#2E7D32"></div>
+      <div class="sc-label">Meta-Description fehlt</div>
+      <div class="sc-value" style="color:#2E7D32">0</div>
+      <div class="sc-sub">von 489 Seiten</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Befunde nach Impact</div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende Meta-Titles</div>
+      <div class="bar-track"><div class="bar-fill" style="width:80%;background:#E8A400"></div></div>
+      <div class="bar-value">389</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende Alt-Texte</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2%;background:#2E7D32"></div></div>
+      <div class="bar-value">8</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende H1-Überschriften</div>
+      <div class="bar-track"><div class="bar-fill" style="width:1%;background:#2E7D32"></div></div>
+      <div class="bar-value">6</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">Fehlende Meta-Descriptions</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0%;background:#2E7D32"></div></div>
+      <div class="bar-value">0</div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-label">4xx / 5xx Fehler</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0%;background:#C62828"></div></div>
+      <div class="bar-value">0</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title">Top-3 Maßnahmen</div>
+      
+    <div class="action-item">
+      <div class="action-num">1</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#FFF8E1;color:#E8A400">Relevant</span>
+        Meta-Titles für 389 URLs erstellen – Kategorien, Produkte und Hauptseite sind nicht indexierbar ohne Titel
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-num">2</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#E8F5E9;color:#2E7D32">Optimierung</span>
+        Mehrfach-H1-Tags auf 34 Seiten (hauptsächlich Produktseiten) auf genau eine H1 reduzieren
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-num">3</div>
+      <div class="action-text">
+        <span class="action-tag" style="background:#E8F5E9;color:#2E7D32">Optimierung</span>
+        Fehlende H1-Tags auf 6 Inhaltsseiten (FAQ, Kontakt, Konfigurator) hinzufügen
+      </div>
+    </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Crawl-Details</div>
+      <div class="info-row"><span class="info-label">Letzter Crawl</span><span class="info-value">2026-06-10</span></div>
+      <div class="info-row"><span class="info-label">Gecrawlte URLs</span><span class="info-value">489</span></div>
+      <div class="info-row"><span class="info-label">Redirects</span><span class="info-value">0</span></div>
+      <div class="info-row"><span class="info-label">Noindex-Seiten</span><span class="info-value">0</span></div>
+      <div class="info-row"><span class="info-label">Gesamtstatus</span><span class="info-value" style="color:#E8A400">Handlungsbedarf</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEITE 2 -->
+<div class="page" id="p1">
+  <div class="header">
+    <div><h1>Technisches SEO &mdash; just-sound.de</h1><p>Crawl: 2026-06-10</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Fehler nach Impact sortiert</div>
+    <table>
+      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs</th></tr></thead>
+      <tbody><tr><td>5xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>&mdash;</td></tr><tr><td>4xx Fehler</td><td><span class="chip chip-crit">0</span></td><td>&mdash;</td></tr><tr><td>Redirects</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Noindex</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEITE 3 -->
+<div class="page" id="p2">
+  <div class="header">
+    <div><h1>On-Page &mdash; just-sound.de</h1><p>Crawl: 2026-06-10</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">On-Page Befunde nach Impact</div>
+    <table>
+      <thead><tr><th>Kategorie</th><th>Anzahl</th><th>Betroffene URLs</th></tr></thead>
+      <tbody><tr><td>Fehlende Meta-Titles</td><td><span class="chip chip-warn">389</span></td><td><button onclick="toggleUrls(this,'urls-229623')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">20 URLs anzeigen</button><div id="urls-229623" style="display:none;margin-top:6px"><a href="https://just-sound.de/" target="_blank" class="url">https://just-sound.de/</a><br><a href="https://just-sound.de/Verstaerker_1" target="_blank" class="url">https://just-sound.de/Verstaerker_1</a><br><a href="https://just-sound.de/KFZ-spez-Zubehoer" target="_blank" class="url">https://just-sound.de/KFZ-spez-Zubehoer</a><br><a href="https://just-sound.de/TV-Zubehoer" target="_blank" class="url">https://just-sound.de/TV-Zubehoer</a><br><a href="https://just-sound.de/Rueckfahrkamera" target="_blank" class="url">https://just-sound.de/Rueckfahrkamera</a><br><a href="https://just-sound.de/Camping" target="_blank" class="url">https://just-sound.de/Camping</a><br><a href="https://just-sound.de/Radios" target="_blank" class="url">https://just-sound.de/Radios</a><br><a href="https://just-sound.de/FAQ-zu-SOUNDde" target="_blank" class="url">https://just-sound.de/FAQ-zu-SOUNDde</a><br><a href="https://just-sound.de/Plug-Play" target="_blank" class="url">https://just-sound.de/Plug-Play</a><br><a href="https://just-sound.de/Hifi-Systeme" target="_blank" class="url">https://just-sound.de/Hifi-Systeme</a><br><a href="https://just-sound.de/autoradio-android-auto" target="_blank" class="url">https://just-sound.de/autoradio-android-auto</a><br><a href="https://just-sound.de/Rabattinformationen" target="_blank" class="url">https://just-sound.de/Rabattinformationen</a><br><a href="https://just-sound.de/CD-Player" target="_blank" class="url">https://just-sound.de/CD-Player</a><br><a href="https://just-sound.de/Subwoofer" target="_blank" class="url">https://just-sound.de/Subwoofer</a><br><a href="https://just-sound.de/AV-Receiver" target="_blank" class="url">https://just-sound.de/AV-Receiver</a><br><a href="https://just-sound.de/Navigation-Fahrhilfen" target="_blank" class="url">https://just-sound.de/Navigation-Fahrhilfen</a><br><a href="https://just-sound.de/Stromkabel" target="_blank" class="url">https://just-sound.de/Stromkabel</a><br><a href="https://just-sound.de/Infinity-REFERENCE-6532EX-2-Wege-16cm-Koaxial-Lautsprecher" target="_blank" class="url">https://just-sound.de/Infinity-REFERENCE-6532EX-2-Wege-16cm-Koaxial-Lautsprecher</a><br><a href="https://just-sound.de/2-Kanal-Verstaerker" target="_blank" class="url">https://just-sound.de/2-Kanal-Verstaerker</a><br><a href="https://just-sound.de/Widerrufsrecht" target="_blank" class="url">https://just-sound.de/Widerrufsrecht</a></div></td></tr><tr><td>Doppelte Meta-Titles</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Meta-Title zu kurz (<30)</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Meta-Title zu lang (>60)</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Fehlende Meta-Descriptions</td><td><span class="chip chip-warn">0</span></td><td>&mdash;</td></tr><tr><td>Fehlende H1-Überschriften</td><td><span class="chip chip-warn">6</span></td><td><button onclick="toggleUrls(this,'urls-564633')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">6 URLs anzeigen</button><div id="urls-564633" style="display:none;margin-top:6px"><a href="https://just-sound.de/FAQ-zu-SOUNDde" target="_blank" class="url">https://just-sound.de/FAQ-zu-SOUNDde</a><br><a href="https://just-sound.de/autoradio-android-auto" target="_blank" class="url">https://just-sound.de/autoradio-android-auto</a><br><a href="https://just-sound.de/3D-Kofferraum" target="_blank" class="url">https://just-sound.de/3D-Kofferraum</a><br><a href="https://just-sound.de/Autoradio-Apple-Carplay_1" target="_blank" class="url">https://just-sound.de/Autoradio-Apple-Carplay_1</a><br><a href="https://just-sound.de/Kontakt" target="_blank" class="url">https://just-sound.de/Kontakt</a><br><a href="https://just-sound.de/Konfigurator_Autoradio_Lautsprecher" target="_blank" class="url">https://just-sound.de/Konfigurator_Autoradio_Lautsprecher</a></div></td></tr><tr><td>Fehlende Alt-Texte (Bilder)</td><td><span class="chip chip-ok">8</span></td><td><button onclick="toggleUrls(this,'urls-860735')" style="background:none;border:none;color:#1565C0;font-size:11px;cursor:pointer;padding:0;font-family:inherit">8 URLs anzeigen</button><div id="urls-860735" style="display:none;margin-top:6px"><a href="https://just-sound.de/media/image/opc/xl/start/slide/esxvn709.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/slide/esxvn709.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/slide/small/crunchcrb501mobil.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/slide/small/crunchcrb501mobil.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/gratisgeschenk_kl.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/gratisgeschenk_kl.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/slide/crunchcrb501.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/slide/crunchcrb501.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/gratisgeschenk.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/gratisgeschenk.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/slide/small/infinityreference6532exmobil.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/slide/small/infinityreference6532exmobil.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/slide/small/esxvn709mobil.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/slide/small/esxvn709mobil.jpg</a><br><a href="https://just-sound.de/media/image/opc/xl/start/slide/infinityreference6532ex.jpg" target="_blank" class="url">https://just-sound.de/media/image/opc/xl/start/slide/infinityreference6532ex.jpg</a></div></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEITE 4 -->
+<div class="page" id="p3">
+  <div class="header">
+    <div><h1>Verlauf &mdash; just-sound.de</h1><p>Monatliche Entwicklung</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Hinweis</div>
+    <p style="font-size:13px;color:#666;line-height:1.6">
+      Der Verlauf wird nach dem zweiten monatlichen Crawl sichtbar.<br>
+      Ab dann zeigt diese Seite automatisch die Entwicklung aller Kennzahlen im Zeitverlauf.
+    </p>
+    <div class="trend-note" style="margin-top:16px">
+      Erster Crawl: 2026-06-10 &mdash; 489 URLs &mdash; Handlungsbedarf
+    </div>
+  </div>
+</div>
+
+<!-- SEITE 5 -->
+<div class="page" id="p4">
+  <div class="header">
+    <div><h1>Empfehlungen &mdash; just-sound.de</h1><p>KI-Analyse &middot; Stand: 2026-06-10</p></div>
+  </div>
+  <div class="section" style="margin-bottom:10px;border-left:3px solid #DDDBD6">
+    <div class="section-title">Zusammenfassung</div>
+    <div class="rec-html"><p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>TOP1: Meta-Titles für 389 URLs erstellen – Kategorien, Produkte und Hauptseite sind nicht indexierbar ohne Titel</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>TOP2: Mehrfach-H1-Tags auf 34 Seiten (hauptsächlich Produktseiten) auf genau eine H1 reduzieren</p>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>TOP3: Fehlende H1-Tags auf 6 Inhaltsseiten (FAQ, Kontakt, Konfigurator) hinzufügen</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Priorisierte Handlungsempfehlungen</div>
+    <div class="rec-html"><p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Kurzzusammenfassung:</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Die Website hat eine kritische Indexierungslücke: 389 von 489 URLs fehlen Meta-Titles vollständig. Das ist das größte SEO-Problem und blockiert die Sichtbarkeit von Kategorien und Produkten. Hinzu kommen strukturelle HTML-Probleme (34 Seiten mit mehreren H1-Tags, 6 Seiten ohne H1). Die Technik ist ansonsten sauber (keine Fehler, Redirects oder Duplikate). Alt-Texte sind ein untergeordnetes Formalienproblem.</p>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>HOHES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Fehlende Meta-Titles (389 URLs) – KRITISCH</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>389 der 489 crawlbaren URLs haben keinen Meta-Title. Das betrifft die Startseite, alle Kategorieseiten und die Produktdetailseiten. Meta-Titles sind ein direktes Ranking-Signal und werden in den Google-Suchergebnissen angezeigt. Ohne sie kann Google nicht einordnen, worum es auf der Seite geht, und die Klickrate sinkt dramatisch.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>*Einschätzung: Echtes, massives SEO-Problem. Das ist kein Formalienproblem.*</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Empfehlung:</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Title-Tags für alle 389 URLs systematisch hinzufügen</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Kategorieseiten: Format „[Kategorie] kaufen | just-sound.de" (z.B. „Autoradios mit Apple CarPlay kaufen | just-sound.de")</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Produktseiten: Format „[Produktname] | [Marke] | just-sound.de" (z.B. „Alpine iLX-705D Autoradio | just-sound.de")</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Startseite: „just-sound.de – Autoradios, Verstärker & HiFi-Komponenten"</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Jeder Title sollte 50–60 Zeichen sein und das Hauptkeyword enthalten</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Tools wie Screaming Frog oder Ahrefs nutzen, um die Änderungen batch-weise durchzuführen</li>
+</ul>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>ERHÖHTES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Mehrfach-H1-Tags (34 Seiten)</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>34 Seiten (überwiegend Produktseiten) haben mehr als eine H1. Das ist ein HTML-Validierungsproblem und verwirrt Suchmaschinen-Crawler und Nutzer zur Seitenstruktur.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>*Einschätzung: Echtes technisches Problem. Beeinträchtigt nicht unmittelbar Rankings, aber signalisiert schlechte Template-Struktur.*</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Empfehlung:</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Pro Seite genau eine H1 festlegen, die die primäre Botschaft transportiert</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Auf Produktseiten: H1 = Produktname (z.B. „<h1>Alpine iLX-705D Autoradio</h1>")</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Auf Kategorieseiten: H1 = Kategoriename (z.B. „<h1>Autoradios mit CarPlay</h1>")</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Weitere Hierarchien mit H2, H3 arbeiten</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Template-Anpassung durchführen – das ist wahrscheinlich ein systematisches Theme-Problem im Shop-System</li>
+</ul>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Fehlende H1-Tags (6 Seiten)</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>6 Seiten haben gar keine H1: FAQ, autoradio-android-auto, 3D-Kofferraum, Autoradio-Apple-Carplay, Kontakt, Konfigurator.</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>*Einschätzung: Für Kontakt, Impressum, FAQ: eher Formalie. Für Kategorieseiten wie „autoradio-android-auto": echtes SEO-Problem.*</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Empfehlung:</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Auf Kategorieseiten (autoradio-android-auto, 3D-Kofferraum, Apple-CarPlay) unbedingt H1 hinzufügen</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Auf Support-Seiten (Kontakt, FAQ) ist eine H1 empfohlen, aber nicht kritisch</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>H1 jeweils mit dem Haupt-Keyword der Seite versehen</li>
+</ul>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>WEITERES OPTIMIERUNGSPOTENZIAL</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Fehlende Alt-Texte (8 Bilder)</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>8 Bilder haben keine Alt-Attribute, alle im Slider auf der Startseite (Crunch CRB501, ESX VN709, Infinity Reference 6532EX).</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>*Einschätzung: Formalienproblem. Für e-commerce Produkte relevant für Barrierefreiheit und Bilder-SEO, aber kein großer Ranking-Hebel.*</p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Empfehlung:</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Alt-Texte hinzufügen im Format: „[Produktname] – [Kurzbeschreibung]"</li>
+</ul>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'>Beispiel: „Crunch CRB501 30cm Bandpass Subwoofer Gehäuse"</p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Slider-Bilder sind wichtig für CTR und User Experience – aussagekräftige Alt-Texte helfen auch bei Bild-Suche</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Niedrige Priorität; kann parallel zu den größeren Problemen gelöst werden</li>
+</ul>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>KEINE PROBLEME ERKANNT</strong></p>
+<br>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Keine 4xx/5xx Fehler</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Keine Redirect-Ketten</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Keine doppelten Meta-Descriptions oder Titles</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Keine noindex-Pages</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Crawlbarkeit ist sauber</li>
+</ul>
+<br>
+<hr style='border:none;border-top:1px solid #E5E3DE;margin:12px 0'>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>PRIORISIERTER AKTIONSPLAN</strong></p>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Woche 1–2: Meta-Titles (BLOCKIER-PROBLEM)</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Alle 389 URLs mit Meta-Titles ausstatten</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Template-Struktur für dynamische Title-Generierung prüfen und anpassen</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Batch-Upload durchführen (CMS-Export/Import oder Skript-basiert)</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Nach Deployment neu crawlen und in GSC neu einreichen</li>
+</ul>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Woche 2–3: H1-Struktur (TECHNISCHE CLEAN-UP)</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Alle 34 Seiten mit mehrfachen H1s auditieren</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Template-Fehler im CMS identifizieren und beheben</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Die 6 Seiten ohne H1 mit passenden H1s ausstatten</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Auf Kategorieseiten: H1 = Kategoriename</li>
+</ul>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Woche 3–4: Alt-Texte (NEBEN-AUFGABE)</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>8 Startseiten-Slider-Bilder mit Alt-Texten versehen</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Gelegenheit nutzen, um weitere Bilder auf Produktseiten zu überprüfen</li>
+</ul>
+<br>
+<p style='font-size:13px;line-height:1.6;color:#333;margin:4px 0'><strong>Kontrolle:</strong></p>
+<ul style='padding-left:20px;margin:6px 0'>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Nach jeder Phase neu crawlen (mit Screaming Frog, Sitebulb oder ähnlich)</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Google Search Console: Indexierungsstatus beobachten</li>
+<li style='margin:4px 0;font-size:13px;line-height:1.6;color:#333'>Mobile & Desktop indexieren? Rankings nach 2–4 Wochen überprüfen</li>
+</ul></div>
+  </div>
+</div>
+
+<script>
+function showPage(idx, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('p' + idx).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleUrls(btn, id) {
+  var el = document.getElementById(id);
+  var count = el.querySelectorAll('a').length;
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    btn.textContent = 'Weniger anzeigen';
+  } else {
+    el.style.display = 'none';
+    btn.textContent = count + ' URLs anzeigen';
+  }
+}
+</script>
+</body>
+</html>
